@@ -9,8 +9,11 @@ export function createRouter(){
         routes : [{
             path : '/',
             name : 'home',
-            // component : ()=>import('@/view/home/index.vue')
-            component : require('@/view/home/index.vue')
+            component : ()=>import(/* webpackChunkName: "home" */ '@/view/home/index.vue')
+        },{
+            path : '/about',
+            name : 'about',
+            component : ()=>import(/* webpackChunkName: "about" */ '@/view/about/index.vue')
         }]
-    })
+    },)
 }

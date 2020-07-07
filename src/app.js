@@ -10,8 +10,11 @@ export function createApp(context) {
         data: {
             url: context ? context.url : "--",
         },
-        // template: `<div id="app" >访问的 URL 是： {{ url }}</div>`,
-        render: (h) => h(App)
+        components : {
+            App
+        },
+        // template: "<div id='app'><App /></div>",
+        render: h => h(App)
     });
     return { app, router };
 }

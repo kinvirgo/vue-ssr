@@ -17,7 +17,8 @@ const baseWebpackConfig = {
     resolve: {
         extensions: [".js", ".vue"],
         alias: {
-            "vue$": "vue/dist/vue.js",
+            // 'vue$': isProd ? "vue/dist/vue.runtime.esm.js" : 'vue/dist/vue.esm.js',
+            'vue$': "vue/dist/vue.js",
             "@": resolve("src"),
             "@@": resolve(),
         },
@@ -27,27 +28,30 @@ const baseWebpackConfig = {
             // .vue 单文件
             {
                 test: /\.vue$/,
-                loader: "vue-loader",
-                options: {
-                    compilerOptions: {
-                        preserveWhitespace: false,
-                    },
-                },
+                use : {
+                    loader: "vue-loader",
+                    options: {
+                        compilerOptions: {
+                            preserveWhitespace: false,
+                        },
+                    }
+                }
             },
             // .jsx、.js
             {
                 test: /\.(jsx|js)$/,
                 exclude: /(node_modules|bower_components)/,
-                use: [
-                    {
-                        loader: "babel-loader",
-                        options: {
-                            //如果有这个设置则不用再添加.babelrc文件进行配置
-                            babelrc: false, // 不采用.babelrc的配置
-                            plugins: ["dynamic-import-webpack"],
-                        },
-                    },
-                ],
+                use : "babel-loader"
+                // use: [
+                //     {
+                //         loader: "babel-loader",
+                //         options: {
+                //             //如果有这个设置则不用再添加.babelrc文件进行配置
+                //             babelrc: false, // 不采用.babelrc的配置
+                //             plugins: ["dynamic-import-webpack"],
+                //         },
+                //     },
+                // ],
             },
             // 静态资源
             {
@@ -80,13 +84,19 @@ const baseWebpackConfig = {
             },
         ],
     },
+    optimization : {
+        moduleIds: 'hashed',
+        chunkIds: 'named'
+    },
     plugins: [
         // vue-loader loader处理
         new VueLoaderPlugin(),
-        // 用文件名的hash替换打包时候的ModulesID
-        new webpack.HashedModuleIdsPlugin({ hashDigestLength: 6 }),
-        // 用文件名的hash替换打包时候的ChunkId
-        new hashedChunkIdPlugin({ length: 6 }),
+        
+        // 用文件名的hash替换打包时候的ChunkId => optimization.chunkIds
+        // new hashedChunkIdPlugin({ length: 6 }),
+
+        // 用文件名的hash替换打包时候的ModulesID => optimization.moduleIds
+        // new webpack.HashedModuleIdsPlugin({ hashDigestLength: 6 }),
     ],
 };
 // 添加压缩css

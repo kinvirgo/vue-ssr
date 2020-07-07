@@ -1,6 +1,6 @@
 const { resolve, isProd } = require("./util")
 const webpack = require("webpack");
-const merge = require("webpack-merge");
+const {merge} = require("webpack-merge");
 const nodeExternals = require("webpack-node-externals");
 const baseWebpackConfig = require("./webpack.base.conf");
 const VueServerPlugin = require("vue-server-renderer/server-plugin");

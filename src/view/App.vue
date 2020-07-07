@@ -1,7 +1,9 @@
 <template>
     <div id="app">
-        <h2 class="title">this is ssr render.</h2>
-        <router-view></router-view>
+        <h2 class="title">this is APP page.</h2>
+        <router-link to="/">首页</router-link>
+        <router-link to="/about">关于</router-link>
+        <router-view ></router-view>
     </div>
 </template>
 

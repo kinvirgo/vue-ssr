@@ -1,6 +1,6 @@
 const { resolve, isProd } = require('./util')
 const webpack = require("webpack");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const baseWebpackConfig = require("./webpack.base.conf");
 
 // css样式提取单独文件
@@ -9,7 +9,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const VueSSRClientPlugin = require("vue-server-renderer/client-plugin");
 
 const clientWebpackConfig = {
-    entry: resolve("entry-client.js"),
+    entry: {
+        app : resolve("entry-client.js")
+    },
     plugins: [
         new VueSSRClientPlugin(),
         // 环境变量
