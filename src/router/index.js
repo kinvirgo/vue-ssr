@@ -14,6 +14,10 @@ export function createRouter(){
             path : '/about',
             name : 'about',
             component : ()=>import(/* webpackChunkName: "about" */ '@/view/about/index.vue')
+        },{
+            path : '/*',
+            name : 'not-find',
+            component : ()=>import(/* webpackChunkName: "404" */ '@/view/404/index.vue')
         }]
     },)
 }

@@ -26,7 +26,6 @@ module.exports = function setupDevServer(app, templatePath, cb) {
         if (bundle && clientManifest) {
             // 准备完毕
             ready()
-            console.log("===in update===\n",!!bundle, !!clientManifest, !!template);
             cb(bundle, { clientManifest, template });
         }
     };
@@ -34,7 +33,6 @@ module.exports = function setupDevServer(app, templatePath, cb) {
     template = fs.readFileSync(templatePath, 'utf-8')
     chokidar.watch(templatePath).on('change', () => {
         template = fs.readFileSync(templatePath, 'utf-8')
-        console.log("===in chokidar===");
         update()
     })
 
@@ -64,7 +62,6 @@ module.exports = function setupDevServer(app, templatePath, cb) {
             devMiddleware.fileSystem,
             'vue-ssr-client-manifest.json'
         ))
-        console.log("===in clientCompiler===");
         update()
     })
 
@@ -82,7 +79,6 @@ module.exports = function setupDevServer(app, templatePath, cb) {
 
         //  vue-ssr-webpack-plugin 生成的bundle
         bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'))
-        console.log("===in serverCompiler===");
         update()
     })
 

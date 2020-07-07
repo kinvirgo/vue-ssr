@@ -1,11 +1,13 @@
 const Koa = require("koa");
 const fs = require("fs");
 const serve = require("koa-static");
+const LRU = require('lru-cache')
 const { resolve, isProd, getIPv4 } = require('./build/util')
 const setupDevServer = require("./build/setup-dev-server")
 const { createBundleRenderer } = require("vue-server-renderer");
 
 const app = new Koa();
+// 静态资源
 app.use(serve(resolve("dist")));
 
 let render,
@@ -13,8 +15,8 @@ readyPromise,
 templatePath = resolve('index.html');
 
 if (isProd) {
-    const serverBundle = require("../dist/vue-ssr-server-bundle.json");
-    const clientManifest = require("../dist/vue-ssr-client-manifest.json");
+    const serverBundle = require("./dist/vue-ssr-server-bundle.json");
+    const clientManifest = require("./dist/vue-ssr-client-manifest.json");
 
     let template = fs.readFileSync(templatePath, 'utf-8')
     // 生成环境
@@ -30,29 +32,20 @@ if (isProd) {
             ...options,
             runInNewContext: false,
         });
-        // console.log( "render=", render.renderToString );
-        // 写入文件
-        fs.writeFile('./t.js', render.renderToString + '', ()=>{
-
-        })
     })
 }
 
-
-
 app.use(async (ctx, next) => {
     const context = { url : ctx.url }
-    await readyPromise.then(()=>{});
-    await render.renderToString(context, (err, html) => {
-        console.log("err=", err);
-        if (err) {
-            ctx.status = 500;
-            ctx.body = "Internal Server Error" + err;
-        } else {
-            ctx.status = 200;
-            ctx.body = html;
-        }
-    });
+    !!readyPromise && await readyPromise.then(()=>{});
+    try {
+        let html = await render.renderToString(context);
+        ctx.status = 200;
+        ctx.body = html;
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = "Internal Server Error.";
+    }
 });
 
 const port = process.env.PORT || 3000;
