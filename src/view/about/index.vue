@@ -1,7 +1,6 @@
 <template>
     <div>
-        <router-link to="/">首页→</router-link>
-        <h2>this is about page. url =>{{ url }}</h2>
+        <span>this is about</span>
     </div>
 </template>
 

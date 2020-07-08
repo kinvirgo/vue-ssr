@@ -6,7 +6,7 @@ export default (context) => {
         const { app, router, store } = createApp(context);
         const { url } = context;
         const { fullPath } = router.resolve(url).route;
-        // console.log( "url-fullPath=", url, fullPath);
+        console.log( "url-fullPath=", url, fullPath);
 
         if (fullPath !== url) {
             return reject({ url: fullPath });
@@ -16,14 +16,19 @@ export default (context) => {
         context.__INITIAL_TIME__ = Date.now();
         // 扩展context.meta()
         context.meta = app.$meta(); // function
-
-        router.push(context.url);
+        // location-url 防止router base不是"/"
+        let { base } = router.options;
+        let locationUrl = url;
+        if(base !== "/" && url.indexOf(base) === 0){
+            locationUrl = url.replace(base, "");
+        }
+        router.push(locationUrl);
         // 等到 router 将可能的异步组件和钩子函数解析完
         router.onReady(() => {
             const matchedComponents = router.getMatchedComponents();
             // 匹配不到的路由，执行 reject 函数，并返回 404
             if (!matchedComponents.length) {
-                return reject({ code: 404 });
+                return reject({ status: 404, url : `${base}/404` });
             }
 
             Promise.all(

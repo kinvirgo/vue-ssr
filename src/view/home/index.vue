@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <router-link to="/about">关于→</router-link>
-        <h3>this is home page.{{ VUE_ENV }}, {{ route ? route.fullPath : '' }}</h3>
-    </div>
+    <div>this is home page.</div>
 </template>
 
 <script>

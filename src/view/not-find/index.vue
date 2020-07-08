@@ -1,5 +1,5 @@
 <template>
-  <h1>this is 404.</h1>
+    <div>this is 404.</div>
 </template>
 
 <script>
@@ -10,9 +10,7 @@ export default {
             title: "404",
         };
     },
-}
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

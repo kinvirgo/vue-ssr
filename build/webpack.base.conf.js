@@ -17,7 +17,6 @@ const baseWebpackConfig = {
     resolve: {
         extensions: [".js", ".vue"],
         alias: {
-            // 'vue$': isProd ? "vue/dist/vue.runtime.esm.js" : 'vue/dist/vue.esm.js',
             'vue$': "vue/dist/vue.js",
             "@": resolve("src"),
             "@@": resolve(),
