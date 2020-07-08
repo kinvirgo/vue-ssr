@@ -4,7 +4,6 @@ import { isFunction, isPromise } from '@/util'
 export default (context) => {
     return new Promise((resolve, reject) => {
         const { app, router, store } = createApp(context);
-
         const { url } = context;
         const { fullPath } = router.resolve(url).route;
         // console.log( "url-fullPath=", url, fullPath);
@@ -12,8 +11,11 @@ export default (context) => {
         if (fullPath !== url) {
             return reject({ url: fullPath });
         }
+
         // context.renderState
         context.__INITIAL_TIME__ = Date.now();
+        // 扩展context.meta()
+        context.meta = app.$meta(); // function
 
         router.push(context.url);
         // 等到 router 将可能的异步组件和钩子函数解析完

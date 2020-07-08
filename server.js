@@ -21,7 +21,7 @@ if (isProd) {
     let template = fs.readFileSync(templatePath, 'utf-8')
     // 生成环境
     render = createBundleRenderer(serverBundle, {
-        runInNewContext: false,
+        runInNewContext: false, 
         template,
         clientManifest
     })

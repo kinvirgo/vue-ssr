@@ -4,7 +4,12 @@
 
 <script>
 export default {
-
+    name: "Not-Find",
+    metaInfo() {
+        return {
+            title: "404",
+        };
+    },
 }
 </script>
 

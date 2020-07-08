@@ -6,6 +6,7 @@ Vue.use(Router)
 export function createRouter(){
     return new Router({
         mode : 'history',
+        // base : "/vue-ssr",
         routes : [{
             path : '/',
             name : 'home',
