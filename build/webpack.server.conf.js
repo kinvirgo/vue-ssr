@@ -25,6 +25,4 @@ const serverWebpackConfig = {
     ],
 };
 
-// isProd && serverWebpackConfig.plugins.push(new VueServerPlugin());
-
 module.exports = merge(baseWebpackConfig, serverWebpackConfig);

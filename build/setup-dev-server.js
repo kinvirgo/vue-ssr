@@ -39,7 +39,10 @@ module.exports = function setupDevServer(app, templatePath, cb) {
     // 修改webpack配合模块热替换使用
     clientWebpackConfig.entry.app = ["webpack-hot-middleware/client?reload=true", clientWebpackConfig.entry.app];
     clientWebpackConfig.output.filename = "js/[name].js";
+    // clientWebpackConfig.output.hotUpdateChunkFilename = "[hash].hot-update.js";
     clientWebpackConfig.plugins.push(
+        // new webpack.HotModuleReplacementPlugin({multiStep: true, fullBuildTimeout : 2000}),
+        // new webpack.HotModuleReplacementPlugin({multiStep: true}),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin()
     );
@@ -66,8 +69,8 @@ module.exports = function setupDevServer(app, templatePath, cb) {
     })
 
     // 插入Koa中间件(模块热替换)
-    app.use(webpackHotMiddleware(clientCompiler))
-    // app.use(webpackHotMiddleware(clientCompiler, { reload : true, heartbeat: 2000 }))
+    // app.use(webpackHotMiddleware(clientCompiler))
+    app.use(webpackHotMiddleware(clientCompiler, { reload : true, heartbeat: 2000 }))
 
     const serverCompiler = webpack(serverWebpackConfig)
     const mfs = new MFS()

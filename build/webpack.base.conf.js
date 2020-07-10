@@ -89,13 +89,7 @@ const baseWebpackConfig = {
     },
     plugins: [
         // vue-loader loader处理
-        new VueLoaderPlugin(),
-        
-        // 用文件名的hash替换打包时候的ChunkId => optimization.chunkIds
-        // new hashedChunkIdPlugin({ length: 6 }),
-
-        // 用文件名的hash替换打包时候的ModulesID => optimization.moduleIds
-        // new webpack.HashedModuleIdsPlugin({ hashDigestLength: 6 }),
+        new VueLoaderPlugin()
     ],
 };
 // 添加压缩css

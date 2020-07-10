@@ -2,8 +2,6 @@ import Vue from 'vue'
 import { createApp } from "./src/app";
 import { isFunction, isPromise } from "@/util";
 
-// 客户端特定引导逻辑……
-
 const { app, router, store } = createApp();
 
 if (window.__INITIAL_STATE__) {
@@ -48,7 +46,7 @@ router.onReady(() => {
             activeated.map(({ asyncData }) => {
                 // 处理asyncData请求
                 if (isFunction(asyncData)) {
-                    let res = asyncData({ store, context: {}, route: to });
+                    let res = asyncData({ axios, store, context: {}, route: to });
                     // 如果是promise就处理，如果不是就创建一个返回
                     // return isPromise(res) ? res : new Promise(r=>r())
                     return isPromise(res) ? res : false;

@@ -38,6 +38,17 @@ if (isProd) {
         cache
     });
 } else {
+    const proxy = require('koa2-proxy-middleware');
+    // 设置代理
+    app.use(proxy({
+        targets : {
+            '/lcop/(.*)' : {
+                target : 'http://ztc-ioms-tx.sit.sf-express.com',
+                changeOrigin: true
+            }
+        }
+    }))
+
     // 开发环境
     readyPromise = setupDevServer(app, templatePath, (bundle, options) => {
         render = createBundleRenderer(bundle, {
@@ -47,19 +58,7 @@ if (isProd) {
     });
 }
 
-// router.get("/*", async (ctx, next)=>{
-//     const { t } = ctx.request.query;
-//     if(t == 123){
-//         ctx.status = 301;
-//         ctx.redirect("/ssr/about")
-//     }else{
-//         await next();
-//     }
-// })
-
 router.get("/*", async (ctx, next) => {
-    // router.get("*", async (ctx, next)=>{
-    console.log("in get=", ctx.url);
     const context = { url: ctx.url };
     !!readyPromise && (await readyPromise.then(() => { }));
     try {

@@ -1,5 +1,11 @@
 <template>
     <div id="app">
+        <p>
+            <router-link to="/">首页-></router-link>
+        </p>
+        <p>
+            <router-link to="/about">关于-></router-link>
+        </p>
         <router-view></router-view>
     </div>
 </template>
@@ -13,10 +19,13 @@ export default {
             title: "首页",
             titleTemplate: "%s | vue-ssr",
             meta: [
+                { vmid: "description", name: "description", content: "my standard description" },
+            ],
+            link: [
                 {
-                    vmid: "description",
-                    name: "description",
-                    content: "my standard description",
+                    rel: "icon",
+                    type: "image/x-icon",
+                    href: "http://ztc-ioms-tx.sit.sf-express.com/platform/dist/favicon.ico",
                 },
             ],
         };
@@ -25,6 +34,9 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+    margin: 0;
+}
 .title {
     color: aquamarine;
 }

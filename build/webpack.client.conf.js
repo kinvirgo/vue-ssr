@@ -22,6 +22,4 @@ const clientWebpackConfig = {
     ]
 };
 
-// isProd && clientWebpackConfig.plugins.push(new VueSSRClientPlugin());
-
 module.exports = merge(baseWebpackConfig, clientWebpackConfig);
