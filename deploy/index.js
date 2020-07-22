@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-const fs = require('fs')
-const package = require('../package.json')
+const path = require("path");
+const { Folder } = require('./deploy.util')
 
-console.log( package.dependencies );
-// console.log('node 自定义命令');
+let folder = new Folder({ base : path.resolve(__dirname, '../') })
 
-if(!!package){
-    const { dependencies, scripts} = package
-    fs.writeFileSync('./package2.json', JSON.stringify({ scripts, dependencies }))
-}
+
+// copyFolder()
+
+folder.copy('./node_modules/axios','./html', ()=>{
+    console.log("复制完成。");
+})

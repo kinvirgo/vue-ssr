@@ -15,4 +15,4 @@ export const isPromise = (val)=>{
     return isObject(val) && isFunction(val.then) && isFunction(val.catch)
 }
 
-export const isBrowser = this === window
+export const isBrowser = typeof window !== undefined

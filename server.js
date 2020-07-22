@@ -11,7 +11,8 @@ let router = new Router();
 const app = new Koa();
 const serve = (root) => static(root, isProd ? {
     // 缓存30天
-    maxage: 1000 * 60 * 60 * 24 * 30
+    // maxage: 1000 * 60 * 60 * 24 * 30
+    maxage: 1 * 24 * 60 * 60 * 1000
 } : {})
 
 // 静态资源
@@ -63,6 +64,9 @@ router.get("/*", async (ctx, next) => {
     !!readyPromise && (await readyPromise.then(() => { }));
     try {
         let html = await render.renderToString(context);
+
+        ctx.set('expires', new Date(Date.now()-1000).toUTCString())
+        ctx.set('Cache-Control','no-cache')
         ctx.status = 200;
         ctx.body = html;
     } catch (error) {
