@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["404"],{zOvP:function(t,n,e){"use strict";e.r(n);var i={name:"Not-Find",metaInfo:()=>({title:"404"})},s=e("KHd+"),l=Object(s.a)(i,(function(){var t=this.$createElement;return(this._self._c||t)("div",[this._v("this is 404.")])}),[],!1,null,null,null);n.default=l.exports}}]);
