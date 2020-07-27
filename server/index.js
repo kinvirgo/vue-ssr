@@ -3,9 +3,10 @@ const Koa = require("koa");
 const static = require("koa-static");
 const Router = require("koa-router");
 const LRU = require("lru-cache");
-const { resolveRoot } = require("./server.util");
-const serverBundle = require("../dist/vue-ssr-server-bundle.json");
-const clientManifest = require("../dist/vue-ssr-client-manifest.json");
+const { resolveRoot } = require("./utils");
+const { createBundleRenderer } = require("vue-server-renderer");
+const serverBundle = require("./static/vue-ssr-server-bundle.json");
+const clientManifest = require("./static/vue-ssr-client-manifest.json");
 
 
 const app = new Koa();

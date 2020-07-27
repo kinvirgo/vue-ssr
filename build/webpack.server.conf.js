@@ -1,4 +1,4 @@
-const { resolve, isProd } = require("./util")
+const { resolve, isProd } = require("./utils")
 const webpack = require("webpack");
 const {merge} = require("webpack-merge");
 const nodeExternals = require("webpack-node-externals");

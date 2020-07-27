@@ -8,6 +8,7 @@
     </div>
 </template>
 <script>
+import AnimationNumber from '@/util/animationNumber'
 import { mapState, mapGetters } from 'vuex'
 import API from '@/axios/api'
 export default {

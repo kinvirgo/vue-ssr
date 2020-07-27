@@ -1,4 +1,4 @@
-const { resolve, isProd } = require("./util");
+const { resolve, isProd } = require("./utils");
 const webpack = require("webpack");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");

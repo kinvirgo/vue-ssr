@@ -4,6 +4,8 @@ const path = require("path");
 const { resolve } = require("path");
 const isAbsolute = path.isAbsolute;
 const isObject = (val) => val !== null && typeof val === "object";
+const resolveRoot = (dir = "/") => resolve(__dirname, "../", dir);
+
 // 文件操作类
 class Folder {
     options = {
@@ -74,7 +76,6 @@ class Folder {
         });
     }
     _getStat(path) {
-        const { debug } = this.options;
         let stats;
         try {
             stats = fs.statSync(path);
@@ -143,23 +144,49 @@ class Folder {
         this._copyRun(opt.from, opt.to, {
             debug,
             cb : ()=>{
-                console.log( `\nTotal:${(Date.now() - time)/1000}s` );
+                console.log( `\nTotal:${(Date.now() - time)/1000}s\n` );
                 // 复制完成处理
                 cb();
                 typeof callback === 'function' && callback();
             }
         });
     }
-    clear(path, options){
+    // 删除目录 或者 文件
+    clear(dir, options){
         let time = Date.now()
         if (!this.options) return;
-        let opt = this._initClear(path, options)
+        let opt = this._initClear(dir, options)
         if(!opt) return;
-        
-
+        let dirs = [];
+        const rmFun = (dir, level)=>{
+            level = level || 1;
+            this.copyStack.push(level); // 入栈
+            let stats = this._getStat(dir);
+            if(stats && stats.isDirectory()){
+                dirs.unshift(dir)
+                // 目录
+                fs.readdir(dir, (err, files)=>{
+                    files.forEach((file)=>{
+                        // 递归处理
+                        rmFun( path.join(dir, file), level+1);
+                    })
+                    // 出栈
+                    this.copyStack.pop() && this.copyStack.length === 0 && dirs.forEach((el)=>{
+                        this._logger(`rmdir ${el}`)
+                        // 删除收集的目录
+                        fs.rmdirSync(el);
+                    })
+                })
+            }else if(stats && stats.isFile()){
+                // 文件
+                fs.unlinkSync(dir);
+            }
+        }
+        rmFun(opt.path);
     }
 }
 
 module.exports = {
     Folder,
+    resolveRoot
 };
